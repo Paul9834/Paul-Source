@@ -1,4 +1,4 @@
-package com.paul9834
+package com.paul9834.paul9834
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
