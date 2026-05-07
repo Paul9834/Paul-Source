@@ -9,5 +9,5 @@ import org.springframework.cache.annotation.EnableCaching
 class PaulSourceApplication
 
 fun main(args: Array<String>) {
-    runApplication<PaulSourceApplication>(*args)
+    runApplication<com.paul9834.paul9834.PaulSourceApplication>(*args)
 }
