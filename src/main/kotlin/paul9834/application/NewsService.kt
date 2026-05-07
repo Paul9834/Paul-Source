@@ -1,8 +1,8 @@
-package com.paul9834.application
+package com.paul9834.paul9834.application
 
-import com.paul9834.domain.model.Article
-import com.paul9834.domain.port.`in`.NewsUseCase
-import com.paul9834.domain.port.out.NewsRepository
+import com.paul9834.paul9834.domain.model.Article
+import com.paul9834.paul9834.domain.port.`in`.NewsUseCase
+import com.paul9834.paul9834.domain.port.out.NewsRepository
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
 

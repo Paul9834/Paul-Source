@@ -1,6 +1,6 @@
-package com.paul9834.domain.port.`in`
+package com.paul9834.paul9834.domain.port.`in`
 
-import com.paul9834.domain.model.Article
+import com.paul9834.paul9834.domain.model.Article
 
 
 interface NewsUseCase {
