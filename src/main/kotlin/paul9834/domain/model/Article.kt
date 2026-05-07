@@ -1,4 +1,4 @@
-package com.paul9834.domain.model
+package com.paul9834.paul9834.domain.model
 
 data class Article(
     val slug: String,
