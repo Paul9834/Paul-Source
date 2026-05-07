@@ -1,10 +1,8 @@
 package com.paul9834.adapter.`in`.web
 
-
-import adapter.`in`.web.NewsMapper
-import adapter.`in`.web.dto.ArticleResponse
-import adapter.`in`.web.dto.NewsPageResponse
-import com.paul9834.paul9834.domain.port.`in`.NewsUseCase
+import com.paul9834.adapter.`in`.web.dto.ArticleResponse
+import com.paul9834.adapter.`in`.web.dto.NewsPageResponse
+import com.paul9834.domain.port.`in`.NewsUseCase
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 

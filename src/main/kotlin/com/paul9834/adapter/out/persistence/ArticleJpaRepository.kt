@@ -7,5 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository
 interface ArticleJpaRepository : JpaRepository<ArticleEntity, Long> {
     fun findBySlug(slug: String): ArticleEntity?
     fun existsBySlug(slug: String): Boolean
-    fun findAllByOrderByPublishedAtDesc(pageable: Pageable): Page<ArticleEntity>
+    fun findByPublishedTrueOrderByPublishedAtDesc(pageable: Pageable): Page<ArticleEntity>
+    fun findByPublishedTrueAndCategoryOrderByPublishedAtDesc(
+        category: String, pageable: Pageable
+    ): Page<ArticleEntity>
 }

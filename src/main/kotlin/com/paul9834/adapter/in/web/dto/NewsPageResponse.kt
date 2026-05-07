@@ -1,7 +1,7 @@
-package adapter.`in`.web.dto
+package com.paul9834.adapter.`in`.web.dto
 
 data class NewsPageResponse(
-    val articles: List<adapter.`in`.web.dto.ArticleResponse>,
+    val articles: List<ArticleResponse>,
     val page: Int,
     val size: Int,
     val topic: String

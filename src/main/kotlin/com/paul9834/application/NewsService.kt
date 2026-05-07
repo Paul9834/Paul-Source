@@ -1,9 +1,9 @@
 package com.paul9834.application
 
 import com.paul9834.adapter.out.persistence.ArticlePersistenceAdapter
-import com.paul9834.paul9834.domain.model.Article
+import com.paul9834.domain.model.Article
 
-import com.paul9834.paul9834.domain.port.`in`.NewsUseCase
+import com.paul9834.domain.port.`in`.NewsUseCase
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
 

@@ -1,12 +1,12 @@
-package adapter.`in`.web
+package com.paul9834.adapter.`in`.web
 
-import adapter.`in`.web.dto.ArticleResponse
-import com.paul9834.paul9834.domain.model.Article
+import com.paul9834.adapter.`in`.web.dto.ArticleResponse
+import com.paul9834.domain.model.Article
 
 object NewsMapper {
 
-    fun toResponse(article: com.paul9834.paul9834.domain.model.Article): adapter.`in`.web.dto.ArticleResponse {
-        return _root_ide_package_.adapter.`in`.web.dto.ArticleResponse(
+    fun toResponse(article: Article): ArticleResponse {
+        return ArticleResponse(
             slug = article.slug,
             title = article.title,
             description = article.description,

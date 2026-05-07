@@ -1,6 +1,6 @@
 package com.paul9834.adapter.out.persistence
 
-import com.paul9834.paul9834.domain.model.Article
+import com.paul9834.domain.model.Article
 import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Component
 
