@@ -34,5 +34,9 @@ class ArticleEntity(
     val publishedAt: String = "",
 
     @Column(nullable = false)
-    val createdAt: LocalDateTime = LocalDateTime.now()
+    val createdAt: LocalDateTime = LocalDateTime.now(),
+
+    @Column(nullable = false, length = 1000)
+    val url: String = ""
 )
+
