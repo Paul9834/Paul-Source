@@ -2,7 +2,6 @@ package com.paul9834.domain.port.`in`
 
 import com.paul9834.domain.model.Article
 
-
 interface NewsUseCase {
     fun getArticles(category: String?, page: Int, size: Int): List<Article>
     fun getArticleBySlug(slug: String): Article?
