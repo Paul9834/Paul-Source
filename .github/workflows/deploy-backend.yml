@@ -50,13 +50,13 @@ jobs:
           script: |
             set -e
             sudo mkdir -p /opt/paul-source
-            JAR_FILE=$(find /opt/paul-source -maxdepth 1 -type f -name '*.jar' ! -name 'original-*.jar' | head -n 1)
+            JAR_FILE=$(find /opt/paul-source -maxdepth 1 -type f -name '*.jar' ! -name 'original-*.jar' ! -name 'app.jar' | head -n 1)
             if [ -z "$JAR_FILE" ]; then
-              echo "No deployed JAR found in /opt/paul-source"
+              echo "No new deployed JAR found in /opt/paul-source"
               exit 1
             fi
             sudo mv "$JAR_FILE" /opt/paul-source/app.jar
             sudo chown root:root /opt/paul-source/app.jar
             sudo chmod 644 /opt/paul-source/app.jar
             sudo systemctl restart paul-source
-            sudo systemctl status paul-source --no-pager
+            sudo systemctl status paul-source --no-pager -l
