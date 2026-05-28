@@ -11,6 +11,18 @@ class ArticlePersistenceAdapter(
     private val jpaRepository: ArticleJpaRepository
 ) {
 
+    fun findAdminArticles(category: String?, page: Int, size: Int): List<Article> {
+        val pageable = PageRequest.of(page, size)
+        val articles = if (category.isNullOrBlank()) {
+            jpaRepository.findAllByOrderByCreatedAtDesc(pageable)
+        } else {
+            jpaRepository.findByCategoryOrderByCreatedAtDesc(category, pageable)
+        }
+
+        return articles.content.map { it.toDomain() }
+    }
+
+
     fun findArticles(category: String?, page: Int, size: Int): List<Article> {
         val pageable = PageRequest.of(page, size)
         val articles = if (category.isNullOrBlank()) {

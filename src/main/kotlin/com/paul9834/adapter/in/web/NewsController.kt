@@ -75,4 +75,25 @@ class NewsController(
 
         return ResponseEntity.ok(NewsMapper.toResponse(published))
     }
+
+
+    @GetMapping("/admin")
+    fun getAdminArticles(
+        @RequestParam(required = false) category: String?,
+        @RequestParam(defaultValue = "0") page: Int,
+        @RequestParam(defaultValue = "20") size: Int
+    ): ResponseEntity<NewsPageResponse> {
+        val articles = newsUseCase.getAdminArticles(category, page, size)
+            .map { NewsMapper.toResponse(it) }
+
+        return ResponseEntity.ok(
+            NewsPageResponse(
+                articles = articles,
+                page = page,
+                size = size,
+                topic = category ?: "all"
+            )
+        )
+    }
+
 }

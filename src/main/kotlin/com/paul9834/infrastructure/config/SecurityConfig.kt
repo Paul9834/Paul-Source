@@ -25,6 +25,7 @@ class SecurityConfig {
             .authorizeHttpRequests { auth ->
                 auth
                     .requestMatchers(HttpMethod.POST, "/api/auth/token").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/api/news/admin").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.GET, "/api/news/**").permitAll()
                     .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                     .anyRequest().authenticated()
