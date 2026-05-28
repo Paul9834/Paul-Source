@@ -1,7 +1,7 @@
 package com.paul9834.adapter.`in`.web
 
-import com.paul9834.adapter.`in`.web.dto.ArticleResponse
 import com.paul9834.adapter.`in`.web.dto.ArticleRequest
+import com.paul9834.adapter.`in`.web.dto.ArticleResponse
 import com.paul9834.domain.model.Article
 import java.text.Normalizer
 import java.time.LocalDateTime
@@ -22,7 +22,11 @@ object NewsMapper {
         )
     }
 
-    fun toDomain(request: ArticleRequest, slug: String? = null): Article {
+    fun toDomain(
+        request: ArticleRequest,
+        slug: String? = null,
+        imageUrl: String? = null
+    ): Article {
         val articleSlug = slug ?: request.title.toSlug()
 
         return Article(
@@ -30,10 +34,10 @@ object NewsMapper {
             title = request.title,
             description = request.description,
             content = request.content,
-            imageUrl = request.imageUrl,
+            imageUrl = imageUrl ?: request.imageUrl,
             category = request.category,
             published = request.published,
-            publishedAt = if (request.published) LocalDateTime.now().toString() else "",
+            publishedAt = if (request.published) LocalDateTime.now().toString() else ""
         )
     }
 

@@ -4,15 +4,18 @@ import com.paul9834.adapter.`in`.web.dto.ArticleRequest
 import com.paul9834.adapter.`in`.web.dto.ArticleResponse
 import com.paul9834.adapter.`in`.web.dto.NewsPageResponse
 import com.paul9834.domain.port.`in`.NewsUseCase
+import com.paul9834.domain.port.out.ImageStoragePort
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.multipart.MultipartFile
 
 @RestController
 @RequestMapping("/api/news")
 @CrossOrigin(origins = ["http://localhost:4200", "https://www.paul9834.com"])
 class NewsController(
-    private val newsUseCase: NewsUseCase
+    private val newsUseCase: NewsUseCase,
+    private val imageStoragePort: ImageStoragePort
 ) {
 
     @GetMapping
@@ -25,7 +28,12 @@ class NewsController(
             .map { NewsMapper.toResponse(it) }
 
         return ResponseEntity.ok(
-            NewsPageResponse(articles = articles, page = page, size = size, topic = category ?: "all")
+            NewsPageResponse(
+                articles = articles,
+                page = page,
+                size = size,
+                topic = category ?: "all"
+            )
         )
     }
 
@@ -39,21 +47,34 @@ class NewsController(
         return ResponseEntity.ok(NewsMapper.toResponse(article))
     }
 
-    @PostMapping
+    @PostMapping(consumes = ["multipart/form-data"])
     fun createArticle(
-        @RequestBody request: ArticleRequest
+        @RequestPart("article") request: ArticleRequest,
+        @RequestPart("image", required = false) image: MultipartFile?
     ): ResponseEntity<ArticleResponse> {
-        val created = newsUseCase.createArticle(NewsMapper.toDomain(request))
+        val imageUrl = image?.let { imageStoragePort.uploadNewsImage(it) }
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(NewsMapper.toResponse(created))
+        val created = newsUseCase.createArticle(
+            NewsMapper.toDomain(request, imageUrl = imageUrl)
+        )
+
+        return ResponseEntity
+            .status(HttpStatus.CREATED)
+            .body(NewsMapper.toResponse(created))
     }
 
-    @PutMapping("/{slug}")
+    @PutMapping("/{slug}", consumes = ["multipart/form-data"])
     fun updateArticle(
         @PathVariable slug: String,
-        @RequestBody request: ArticleRequest
+        @RequestPart("article") request: ArticleRequest,
+        @RequestPart("image", required = false) image: MultipartFile?
     ): ResponseEntity<ArticleResponse> {
-        val updated = newsUseCase.updateArticle(slug, NewsMapper.toDomain(request, slug))
+        val imageUrl = image?.let { imageStoragePort.uploadNewsImage(it) }
+
+        val updated = newsUseCase.updateArticle(
+            slug,
+            NewsMapper.toDomain(request, slug, imageUrl)
+        )
 
         return ResponseEntity.ok(NewsMapper.toResponse(updated))
     }
@@ -63,7 +84,6 @@ class NewsController(
         @PathVariable slug: String
     ): ResponseEntity<Void> {
         newsUseCase.deleteArticle(slug)
-
         return ResponseEntity.noContent().build()
     }
 
@@ -72,10 +92,8 @@ class NewsController(
         @PathVariable slug: String
     ): ResponseEntity<ArticleResponse> {
         val published = newsUseCase.publishArticle(slug)
-
         return ResponseEntity.ok(NewsMapper.toResponse(published))
     }
-
 
     @GetMapping("/admin")
     fun getAdminArticles(
@@ -95,5 +113,4 @@ class NewsController(
             )
         )
     }
-
 }
