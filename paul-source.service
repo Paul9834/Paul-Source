@@ -1,0 +1,19 @@
+[Unit]
+Description=Paul Source Spring Boot Backend
+After=network.target mysql.service
+Wants=mysql.service
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/paul-source
+EnvironmentFile=/etc/paul-source.env
+ExecStart=/usr/bin/java -jar /opt/paul-source/app.jar
+SuccessExitStatus=143
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
