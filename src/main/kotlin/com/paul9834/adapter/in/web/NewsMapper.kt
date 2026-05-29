@@ -27,7 +27,7 @@ object NewsMapper {
         slug: String? = null,
         imageUrl: String? = null
     ): Article {
-        val articleSlug = slug ?: request.title.toSlug()
+        val articleSlug = slug ?: request.slug?.takeIf { it.isNotBlank() }?.toSlug() ?: request.title.toSlug()
 
         return Article(
             slug = articleSlug,
