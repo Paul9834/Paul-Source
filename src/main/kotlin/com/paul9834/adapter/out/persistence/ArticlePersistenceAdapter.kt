@@ -39,12 +39,16 @@ class ArticlePersistenceAdapter(
     }
 
     fun save(article: Article): Article {
+        require(article.slug.length <= 100) { "Slug too long: ${article.slug.length}" }
+        require(article.category.length <= 100) { "Category too long: ${article.category.length}" }
+
         if (jpaRepository.existsBySlug(article.slug)) {
-            error("Article already exists: ${article.slug}")
+            throw IllegalArgumentException("Article already exists: ${article.slug}")
         }
 
         return jpaRepository.save(article.toEntity()).toDomain()
     }
+
 
     fun update(slug: String, article: Article): Article {
         val current = jpaRepository.findBySlug(slug) ?: error("Article not found: $slug")
