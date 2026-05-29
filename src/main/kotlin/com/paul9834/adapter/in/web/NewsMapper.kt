@@ -55,7 +55,10 @@ object NewsMapper {
             .lowercase(Locale.getDefault())
             .replace("[^a-z0-9]+".toRegex(), "-")
             .trim('-')
+            .take(95)
+            .trim('-')
 
         return normalized.ifBlank { "article" }
     }
+
 }
