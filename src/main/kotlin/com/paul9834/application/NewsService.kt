@@ -46,4 +46,15 @@ class NewsService(
     override fun publishArticle(slug: String): Article {
         return persistenceAdapter.publish(slug)
     }
+
+    @CacheEvict(value = ["news", "admin-news", "article"], allEntries = true)
+    override fun likeArticle(slug: String): Article {
+        val current = persistenceAdapter.findBySlug(slug)
+            ?: error("Article not found: $slug")
+
+        val updated = current.copy(likesCount = current.likesCount + 1)
+        return persistenceAdapter.update(slug, updated)
+    }
+
+
 }

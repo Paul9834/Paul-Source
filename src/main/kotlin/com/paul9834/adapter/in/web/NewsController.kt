@@ -95,6 +95,15 @@ class NewsController(
         return ResponseEntity.ok(NewsMapper.toResponse(published))
     }
 
+    @PatchMapping("/{slug}/like")
+    fun likeArticle(
+        @PathVariable slug: String
+    ): ResponseEntity<ArticleResponse> {
+        val updated = newsUseCase.likeArticle(slug)
+        return ResponseEntity.ok(NewsMapper.toResponse(updated))
+    }
+
+
     @GetMapping("/admin")
     fun getAdminArticles(
         @RequestParam(required = false) category: String?,

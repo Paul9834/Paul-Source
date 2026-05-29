@@ -4,7 +4,6 @@ import com.paul9834.adapter.`in`.web.dto.ArticleRequest
 import com.paul9834.adapter.`in`.web.dto.ArticleResponse
 import com.paul9834.domain.model.Article
 import java.text.Normalizer
-import java.time.LocalDateTime
 import java.util.Locale
 
 object NewsMapper {
@@ -16,9 +15,10 @@ object NewsMapper {
             description = article.description,
             content = article.content,
             imageUrl = article.imageUrl,
-            publishedAt = article.publishedAt,
             category = article.category,
-            published = article.published
+            published = article.published,
+            publishedAt = article.publishedAt,
+            likesCount = article.likesCount
         )
     }
 
@@ -37,7 +37,15 @@ object NewsMapper {
             imageUrl = imageUrl ?: request.imageUrl,
             category = request.category,
             published = request.published,
-            publishedAt = if (request.published) LocalDateTime.now().toString() else ""
+            publishedAt = if (request.published) {
+                java.time.OffsetDateTime.now(
+                    java.time.ZoneId.of("America/Bogota")
+                ).toString()
+            } else {
+                ""
+            },
+            createdAt = "",
+            likesCount = 0
         )
     }
 

@@ -36,7 +36,8 @@ class ArticleEntity(
     @Column(nullable = false)
     val createdAt: LocalDateTime = LocalDateTime.now(),
 
-    @Column(nullable = false, length = 1000)
-    val url: String = ""
+    @Column(nullable = false)
+    val likesCount: Long = 0
+
 )
 

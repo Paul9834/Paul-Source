@@ -1,5 +1,6 @@
 package com.paul9834.adapter.`in`.web.dto
 
+// ArticleResponse.kt
 data class ArticleResponse(
     val slug: String,
     val title: String,
@@ -8,5 +9,6 @@ data class ArticleResponse(
     val imageUrl: String?,
     val category: String,
     val published: Boolean,
-    val publishedAt: String
+    val publishedAt: String,
+    val likesCount: Long
 )

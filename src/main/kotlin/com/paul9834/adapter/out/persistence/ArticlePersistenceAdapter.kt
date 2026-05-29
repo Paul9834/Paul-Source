@@ -86,7 +86,8 @@ private fun ArticleEntity.toDomain() = Article(
     publishedAt = publishedAt,
     category = category,
     published = published,
-    createdAt = createdAt.toString()
+    createdAt = createdAt.toString(),
+    likesCount = likesCount
 )
 
 private fun Article.toEntity(id: Long = 0) = ArticleEntity(
@@ -99,8 +100,10 @@ private fun Article.toEntity(id: Long = 0) = ArticleEntity(
     publishedAt = publishedAt,
     category = category,
     published = published,
-    createdAt = createdAt.toLocalDateTime()
+    createdAt = createdAt.toLocalDateTime(),
+    likesCount = likesCount
 )
+
 
 private fun String.toLocalDateTime(): LocalDateTime {
     return if (isBlank()) LocalDateTime.now() else LocalDateTime.parse(this)

@@ -10,4 +10,6 @@ interface NewsUseCase {
     fun updateArticle(slug: String, article: Article): Article
     fun deleteArticle(slug: String)
     fun publishArticle(slug: String): Article
+    fun likeArticle(slug: String): Article
+
 }
