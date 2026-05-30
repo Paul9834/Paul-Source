@@ -26,13 +26,14 @@ class ArticlePersistenceAdapter(
     fun findArticles(category: String?, page: Int, size: Int): List<Article> {
         val pageable = PageRequest.of(page, size)
         val articles = if (category.isNullOrBlank()) {
-            jpaRepository.findByPublishedTrueOrderByPublishedAtDesc(pageable)
+            jpaRepository.findByPublishedTrueOrderByCreatedAtDesc(pageable)
         } else {
-            jpaRepository.findByPublishedTrueAndCategoryOrderByPublishedAtDesc(category, pageable)
+            jpaRepository.findByPublishedTrueAndCategoryOrderByCreatedAtDesc(category, pageable)
         }
 
         return articles.content.map { it.toDomain() }
     }
+
 
     fun findBySlug(slug: String): Article? {
         return jpaRepository.findBySlug(slug)?.toDomain()

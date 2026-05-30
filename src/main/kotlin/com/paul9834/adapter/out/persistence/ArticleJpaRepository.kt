@@ -9,8 +9,8 @@ interface ArticleJpaRepository : JpaRepository<ArticleEntity, Long> {
     fun existsBySlug(slug: String): Boolean
     fun deleteBySlug(slug: String)
 
-    fun findByPublishedTrueOrderByPublishedAtDesc(pageable: Pageable): Page<ArticleEntity>
-    fun findByPublishedTrueAndCategoryOrderByPublishedAtDesc(
+    fun findByPublishedTrueOrderByCreatedAtDesc(pageable: Pageable): Page<ArticleEntity>
+    fun findByPublishedTrueAndCategoryOrderByCreatedAtDesc(
         category: String,
         pageable: Pageable
     ): Page<ArticleEntity>
