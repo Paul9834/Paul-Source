@@ -5,6 +5,7 @@ import com.paul9834.adapter.`in`.web.dto.ArticleResponse
 import com.paul9834.adapter.`in`.web.dto.NewsPageResponse
 import com.paul9834.domain.port.`in`.NewsUseCase
 import com.paul9834.domain.port.out.ImageStoragePort
+import org.springframework.http.CacheControl
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -18,6 +19,7 @@ class NewsController(
     private val imageStoragePort: ImageStoragePort
 ) {
 
+
     @GetMapping
     fun getArticles(
         @RequestParam(required = false) category: String?,
@@ -27,15 +29,18 @@ class NewsController(
         val articles = newsUseCase.getArticles(category, page, size)
             .map { NewsMapper.toResponse(it) }
 
-        return ResponseEntity.ok(
-            NewsPageResponse(
-                articles = articles,
-                page = page,
-                size = size,
-                topic = category ?: "all"
+        return ResponseEntity.ok()
+            .cacheControl(CacheControl.noStore())
+            .body(
+                NewsPageResponse(
+                    articles = articles,
+                    page = page,
+                    size = size,
+                    topic = category ?: "all"
+                )
             )
-        )
     }
+
 
     @GetMapping("/{slug}")
     fun getArticleBySlug(
