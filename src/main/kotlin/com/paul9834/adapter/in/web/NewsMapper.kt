@@ -4,9 +4,13 @@ import com.paul9834.adapter.`in`.web.dto.ArticleRequest
 import com.paul9834.adapter.`in`.web.dto.ArticleResponse
 import com.paul9834.domain.model.Article
 import java.text.Normalizer
+import java.time.LocalDateTime
+import java.time.ZoneId
 import java.util.Locale
 
 object NewsMapper {
+
+    private val colombiaZone: ZoneId = ZoneId.of("America/Bogota")
 
     fun toResponse(article: Article): ArticleResponse {
         return ArticleResponse(
@@ -27,7 +31,10 @@ object NewsMapper {
         slug: String? = null,
         imageUrl: String? = null
     ): Article {
-        val articleSlug = slug ?: request.slug?.takeIf { it.isNotBlank() }?.toSlug() ?: request.title.toSlug()
+        val nowColombia = LocalDateTime.now(colombiaZone).toString()
+        val articleSlug = slug
+            ?: request.slug?.takeIf { it.isNotBlank() }?.toSlug()
+            ?: request.title.toSlug()
 
         return Article(
             slug = articleSlug,
@@ -37,14 +44,8 @@ object NewsMapper {
             imageUrl = imageUrl ?: request.imageUrl,
             category = request.category,
             published = request.published,
-            publishedAt = if (request.published) {
-                java.time.OffsetDateTime.now(
-                    java.time.ZoneId.of("America/Bogota")
-                ).toString()
-            } else {
-                ""
-            },
-            createdAt = "",
+            publishedAt = if (request.published) nowColombia else "",
+            createdAt = nowColombia,
             likesCount = 0
         )
     }
@@ -60,5 +61,4 @@ object NewsMapper {
 
         return normalized.ifBlank { "article" }
     }
-
 }
