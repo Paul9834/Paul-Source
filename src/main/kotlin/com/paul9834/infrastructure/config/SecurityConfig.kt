@@ -24,6 +24,14 @@ class SecurityConfig {
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
             .authorizeHttpRequests { auth ->
                 auth
+                    .requestMatchers(
+                        "/swagger-ui.html",
+                        "/swagger-ui/**",
+                        "/api-docs/**",
+                        "/v3/api-docs/**",
+                        "/actuator/health",
+                        "/actuator/info"
+                    ).permitAll()
                     .requestMatchers(HttpMethod.POST, "/api/auth/token").permitAll()
                     .requestMatchers(HttpMethod.GET, "/api/news/admin").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.GET, "/api/news/**").permitAll()
@@ -56,5 +64,4 @@ class SecurityConfig {
             registerCorsConfiguration("/**", configuration)
         }
     }
-
 }
