@@ -61,7 +61,7 @@ class ArticlePersistenceAdapter(
             } else {
                 ""
             },
-            likesCount = current.likesCount
+            likesCount = article.likesCount
         )
 
         return jpaRepository.save(updatedArticle.toEntity(current.id)).toDomain()
